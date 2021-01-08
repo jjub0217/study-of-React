@@ -1,25 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';// <- "React라는 변수에, JSX를 사용한 내용을 담겠다."
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return   (
+  <div>
+    <h1>Hello</h1>
+  </div>
+  )
+  // return <div className= "App" /> 
+  // <div>Hello!</div> // <- 리턴값이 한줄일때는 리턴 밑에 줄에 쓰면 안됨. 
 }
 
-export default App;
+export default App; // <- 이렇게 하면 APP 이라는 것(함수)를 다른 파일에서 똑같이 APP 이라는 이름으로, APP 함수를 사용할수 있다.
