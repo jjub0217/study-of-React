@@ -14,11 +14,11 @@ class App extends React.Component {
   }
 
 
-  componentDidMount(){
+  componentDidMount(){ // <- 컴포넌트(앱)가 처음으로 화면에 그려질때 호출되는 함수
     console.log('componentDidMount 함수');
   }
 
-  componentDidUpdate(){
+  componentDidUpdate(){ // <- 뷰가 업데이트 되면 render 함수를 실행 시킨 후에 -> 실행
     console.log('componentDidUpdate 함수');
   }
 
