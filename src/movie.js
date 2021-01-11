@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes, { func } from 'prop-types';
+import PropTypes from 'prop-types';
 
 function Movie({id, title, year, summary, poster}){
     return <h1>{title}</h1>
