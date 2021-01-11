@@ -1,48 +1,72 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react';// <- <- "JSX를 사용한 리액트"
-
+import axios from 'axios';
 
 class App extends React.Component {
    
-  state = {
-    count: 0,
-  }
-
-  constructor(props){
-    super(props);
-    console.log('콘스트럭트 함수');
-  }
-
-  componentDidMount(){
-    console.log('componentDidMount 함수');
-  }
-
-  componentDidUpdate(){
-    console.log('componentDidUpdate 함수');
-  }
-
-  componentWillUnmount(){
-    console.log('componentWillUnmount 함수');
-  }
-
-  add = () => {
-    this.setState(current => ( {count : current.count +1}));
+  state = { // <- 앱 데이터 저장
+    loading : true,
+    movies: [], // <- 원래 빈 배열이었던, movies 프로퍼티의 값들에 데이터들을 저장할것이다.
   }
   
-  minus = () => {
-    this.setState(current => ( {count : current.count -1}));
+  getMovies = async () => {
+    // const movies = await axios.get('https://yts-proxy.now.sh/list_movies.json');
+    // └> axios.get 함수가 반환하는 값을, movies 라는 변수에 담았다.
+    // console.log(movies);
+    // console.log(movies.data.data.movies);
+
+    // 위 코드를 디스트럭처링 할당을 쓰면 아래 코드처럼 된다.
+
+    const { 
+      data: // : movies -> data
+        { 
+          data: // : movies -> data -> data
+         {movies}, // : movies -> data -> data -> movies
+          },} = await axios.get('https://yts-proxy.now.sh/list_movies.json');
+    // └> axios.get 해서 가져온 영화 앱('movies') 전체 데이터에서, -> data -> data -> movies 라는 
+    //    우리가 정말 필요로하는 데이터 알맹이라는 프로터티 값을 가져왔다. 
+    // └> axios.get 해서 가져온 영화 앱('movies') 전체 데이터에서, -> data -> data -> movies 라는 
+    //    우리가 정말 필요로하는 데이터 알맹이라는 프로터티 값을 가져왔다. 
+
+    // this.setState(current => ({count: current.count + 1}))
+    // └>current라는 매개변수에 state 객체가 담긴다.
+    
+    // const { loading } = this.state 
+    // └> state 라는 객체에서 loading 이라는 프로퍼티 키의 값을, loading 이라는 변수에 담았다. 
+    
+    // this.setState({ loading : false })
+    // └> loading 이라는 변수의 값을 false 로 바꾸겠다. 
+
+
+    // this.setState({movies : movies}) 
+    // └> state 객체에서, movies 라는 빈 배열을, 
+    // axios.get 해서 가져온 영화 앱('movies') 전체 데이터에서, -> data -> data -> movies 라는 
+    // 우리가 정말 필요로하는 데이터 알맹이라는 프로터티 값을 가져온것을,
+    // 담은, movies 라는 매개변수로 바꿀것이다. 
+
+    this.setState({movies, loading:false})
+    // this.setState({movies: movies}) = this.setState({ movies })
+    // state 의 loading 의 값을 false 로 바꿀것이다. 
   }
 
+  componentDidMount(){ 
+
+    // ┌ 여기서 앱을 로딩시켜야 한다. 
+    // setTimeout(()=>{
+    //   this.setState({loading: false})
+    // }, 6000)
+    
+    // axios.get('https://yts-proxy.now.sh/list_movies.json')
+    this.getMovies();
+
+  }
 
   render(){
-    console.log('render함수');
+    const {loading} = this.state; // <- 'loading' = false 가 된다.
     return (
-    <div>
-      <h1>I'm a class component</h1>
-      <h2>The number is: {this.state.count}</h2>
-      <button onClick={this.add}>Add</button> {/* <- Add 버튼을 누르면 state 의 count 값이 증가*/}
-      <button onClick={this.minus}>Minus</button> {/* <- Minus 버튼을 누르면 state 의 count 값이 감소*/}
-    </div>
+      <div>
+        {loading ? '로딩중...' : '로딩완료'} {/* <- 로딩완료 부분에 앱 데이터를 출력시켜야 한다.*/}
+      </div>
     )
   } 
     
