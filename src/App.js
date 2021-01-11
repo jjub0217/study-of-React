@@ -1,6 +1,10 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react';// <- <- "JSX를 사용한 리액트"
 import axios from 'axios';
+import Movie from './Movie';
+import  './App.css';
+
 
 class App extends React.Component {
    
@@ -22,7 +26,8 @@ class App extends React.Component {
         { 
           data: // : movies -> data -> data
          {movies}, // : movies -> data -> data -> movies
-          },} = await axios.get('https://yts-proxy.now.sh/list_movies.json');
+          // },} = await axios.get('https://yts-proxy.now.sh/list_movies.json');
+          },} = await axios.get('https://yts-proxy.now.sh/list_movies.json?sort_by=rating');
     // └> axios.get 해서 가져온 영화 앱('movies') 전체 데이터에서, -> data -> data -> movies 라는 
     //    우리가 정말 필요로하는 데이터 알맹이라는 프로터티 값을 가져왔다. 
     // └> axios.get 해서 가져온 영화 앱('movies') 전체 데이터에서, -> data -> data -> movies 라는 
@@ -41,11 +46,12 @@ class App extends React.Component {
     // this.setState({movies : movies}) 
     // └> state 객체에서, movies 라는 빈 배열을, 
     // axios.get 해서 가져온 영화 앱('movies') 전체 데이터에서, -> data -> data -> movies 라는 
-    // 우리가 정말 필요로하는 데이터 알맹이라는 프로터티 값을 가져온것을,
-    // 담은, movies 라는 매개변수로 바꿀것이다. 
+    // 우리가 정말 필요로하는 데이터 알맹이라는 프로터티 값을 가져온것을 담은, 
+    // 변수인, movies로 바꿀것이다. 
 
     this.setState({movies, loading:false})
     // this.setState({movies: movies}) = this.setState({ movies })
+    // state 의 movies 의 빈 배열을 데이터 알맹이로 바꿀것이다. 
     // state 의 loading 의 값을 false 로 바꿀것이다. 
   }
 
@@ -62,12 +68,26 @@ class App extends React.Component {
   }
 
   render(){
-    const {loading} = this.state; // <- 'loading' = false 가 된다.
+    const {loading, movies} = this.state; 
+    // └> 'state 객체의, loading 과 movies 라는 프로퍼티 키의 값을, loading 과 movies 라는 변수에 담았다.
+    console.log(movies); // <- 빈배열 에서, 리턴 후, 빈 배열이 데이터가 담긴 배열로 바뀐다.
     return (
-      <div>
-        {loading ? '로딩중...' : '로딩완료'} {/* <- 로딩완료 부분에 앱 데이터를 출력시켜야 한다.*/}
-      </div>
-    )
+      <section class="container">
+        {/* {loading ? '로딩중...' : '로딩완료'} <- 로딩완료 부분에 앱 데이터를 출력시켜야 한다. */}
+        {loading ? (<div class="loader">
+                      <span class="loader__text>">로딩중...</span>
+                    </div>
+                    ) : 
+                  (<div class="movies">{movies.map(movie => 
+                      {console.log(movie); // 배열의 요소 개수만큼, movie 배열에 담긴, 데이터의 객체들이 반환된다.
+                      return <Movie key= {movie.id} id={movie.id} year={movie.year} title={movie.title} summary={movie.summary} poster={movie.medium_cover_image}/>
+                       }
+                    )
+                  }
+                  </div>
+                  )}
+                  </section>
+        )
   } 
     
 }
