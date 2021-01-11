@@ -74,7 +74,7 @@ function App() {
 
 
 Food.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired, // isRequired : 필요하다.
   picture: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
 }
