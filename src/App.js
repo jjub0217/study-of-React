@@ -6,28 +6,26 @@ import { HashRouter, Route } from 'react-router-dom';
 import Home from './routes/Home';//<- 라우터 다 만든 다음에, Home 컴포넌트 보이게 재수정하는것임.
 import About from './routes/About';
 import Navigation from './component/Navigation';
+import Detail from './routes/Detail';
+
 
 
 
 function App() {
   return (
-  // <Home />
   <HashRouter>
-    {/* <Route path="/home">*/}{/*<- route : url 로 화면 이동시켜주는 라우터 */}
-      {/* <h1>Home</h1>*/}
-    {/* </Route> */}
-
-    {/* <Route path="/home/introduction"> */}
-      {/* <h1>Introduction</h1> */}
-    {/* </Route> */}
 
     <Navigation />
     <Route path="/" exact={true} component={Home} />{/* <- Route component : 특정 Home 이란 url 페이지 컴포넌트를 불러온다.*/}
+                                                    {/* <- url 에 / 라고 적은것들만 Home 페이지로 이동시켜주는 라우터*/}
     <Route path="/about" exact={true} component={About} />{/* <- Route component :특정 About 이란 url 페이지 컴포넌트를 불러온다.*/}
+                                                          {/* <- url 에 /about 라고 적은것들만 about 페이지로 이동시켜주는 라우터*/}
     {/* <Route path="/about"> */}
       {/* <h1>About</h1>   */}
     {/* </Route> */}
     
+
+    <Route path="/movie-detail" component={Detail} />
   </HashRouter>
   )
 }
